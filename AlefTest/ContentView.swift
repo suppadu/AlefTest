@@ -29,7 +29,7 @@ struct ContentView: View {
                         .font(.system(size: 20))
                         .fontWeight(.medium)
                     Spacer()
-                    if viewModel.kids.count <= 5 {
+                    if viewModel.kids.count < 5 {
                         Button {
                             viewModel.kids.append(Children())
                         } label: {

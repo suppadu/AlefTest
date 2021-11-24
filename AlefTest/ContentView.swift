@@ -10,8 +10,8 @@ import SwiftUI
 struct ContentView: View {
     
     @ObservedObject var viewModel: ContentViewModel = ContentViewModel()
-    @State var nameFirst: String = ""
-    @State var age: String = ""
+    
+    @State var isPresentClearDialog: Bool = false
     
     var body: some View {
         ScrollView {
@@ -20,8 +20,8 @@ struct ContentView: View {
                     .foregroundColor(.primary)
                     .font(.system(size: 20))
                     .fontWeight(.medium)
-                CustomTextField(textType: $nameFirst, label: "Имя")
-                CustomTextField(textType: $age, label: "Возраст", isNumber: true)
+                CustomTextField(textType: $viewModel.nameFirst, label: "Имя")
+                CustomTextField(textType: $viewModel.age, label: "Возраст", isNumber: true)
                 
                 HStack(alignment: .center) {
                     Text("Дети (макс. 5)")
@@ -68,7 +68,7 @@ struct ContentView: View {
                     HStack(alignment: .center) {
                         Spacer()
                         Button {
-                            viewModel.removeAllKids()
+                            isPresentClearDialog.toggle()
                         } label: {
                             Text("Очистить")
                                 .padding(.horizontal, 40)
@@ -85,6 +85,12 @@ struct ContentView: View {
         }
         .onTapGesture {
             hideKeyboard()
+        }
+        .actionSheet(isPresented: $isPresentClearDialog) {
+            ActionSheet(title: Text("Очистить?"), message: Text("Все дети будут удаленны"), buttons: [
+                .default(Text("Очистить")) { viewModel.removeAllKids() },
+                .cancel(Text("Отмена"))
+            ])
         }
     }
 }

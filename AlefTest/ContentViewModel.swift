@@ -9,6 +9,8 @@ import Foundation
 
 class ContentViewModel: ObservableObject {
     @Published public var kids: [Children] = []
+    @Published var nameFirst: String = ""
+    @Published var age: String = ""
     
     func removeAllKids() {
         self.kids.removeAll()

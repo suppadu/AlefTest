@@ -31,7 +31,9 @@ struct ContentView: View {
                     Spacer()
                     if viewModel.kids.count < 5 {
                         Button {
-                            viewModel.kids.append(Children())
+                            withAnimation {
+                                viewModel.kids.append(Children())
+                            }
                         } label: {
                             HStack(alignment: .center, spacing: 5) {
                                 Image(systemName: "plus")
@@ -48,7 +50,9 @@ struct ContentView: View {
                                 CustomTextField(textType: children.name, label: "Имя")
                                     .frame(width: UIScreen.main.bounds.width / 2)
                                 Button {
-                                    viewModel.removeChildren(children.wrappedValue)
+                                    withAnimation {
+                                        viewModel.removeChildren(children.wrappedValue)
+                                    }
                                 } label: {
                                     Text("Удалить")
                                 }
@@ -88,7 +92,11 @@ struct ContentView: View {
         }
         .actionSheet(isPresented: $isPresentClearDialog) {
             ActionSheet(title: Text("Очистить?"), message: Text("Все дети будут удаленны"), buttons: [
-                .default(Text("Очистить")) { viewModel.removeAllKids() },
+                .default(Text("Очистить")) {
+                    withAnimation {
+                        viewModel.removeAllKids()
+                    }
+                },
                 .cancel(Text("Отмена"))
             ])
         }
